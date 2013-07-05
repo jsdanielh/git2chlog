@@ -25,6 +25,7 @@ my $VERSION = '2012-07-29 06:11'; # UTC
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Written by Jim Meyering
+# Modified for HP by Jose Daniel Hernandez <jsdaniel.h@hp.com>
 
 use strict;
 use warnings;
@@ -332,14 +333,6 @@ sub git_dir_option($)
          $counter++;
       }
 
-      if (!$chlog_commit){
-         #There is not changelog in commit message
-         #splice(@line);
-         #next;
-         #print "Hey";
-      }
-
-
       my $author_line = shift @line;
       defined $author_line
         or die "$ME:$.: unexpected EOF\n";
@@ -389,11 +382,16 @@ sub git_dir_option($)
       # or if this or the previous entry consists of two or more paragraphs,
       # or if this is a changelog commit,
       # then print the header.
-      if ( (! $cluster
-          || $date_line ne $prev_date_line
-          || "@coauthors" ne "@prev_coauthors"
-          || $multi_paragraph
-          || $prev_multi_paragraph) && $chlog_commit)
+
+      if ( 
+          (
+            ! $cluster
+            || $date_line ne $prev_date_line
+            || "@coauthors" ne "@prev_coauthors"  
+#            || $multi_paragraph
+#            || $prev_multi_paragraph
+          )
+          && $chlog_commit)
         {
           $prev_date_line eq ''
             or print "\n";
