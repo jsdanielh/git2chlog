@@ -220,7 +220,8 @@ sub git_dir_option($)
 
 {
   my $since_date;
-  my $format_string = '%B%n%b%n';
+#  my $format_string = '%B%n%b%n';
+  my $format_string = '%B%n';
   my $amend_file;
   my $append_dot = 0;
   my $cluster = 1;
@@ -315,6 +316,8 @@ sub git_dir_option($)
 
       my $line_from_chlog;
       my $chlog_commit=0;
+      my $chlog_start_line=0;
+      my $counter=1;
       #Parse of the ++Changelog keyword and its leading lines
       foreach $line_from_chlog (@line)
       {
@@ -322,9 +325,11 @@ sub git_dir_option($)
          {
             #Found keyword. Updating @line
             $chlog_commit=1;
-            print "Matched!";
+            $chlog_start_line = $counter;
+#            print "Matched!. Counter: ";
             last;
          }
+         $counter++;
       }
 
       if (!$chlog_commit){
@@ -412,6 +417,11 @@ sub git_dir_option($)
         }
       elsif ($chlog_commit)  
         {
+          # Removing messages that are not part of the changelog by itself
+          splice @line, 0, $chlog_start_line-2;
+#          print "Line is: " . $chlog_start_line;
+          
+          # If append dot option is active.
           if ($append_dot)
             {
               # If the first line of the message has enough room, then
