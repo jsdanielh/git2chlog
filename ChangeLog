@@ -1,0 +1,19 @@
+2013-07-05  José Daniel Hernández  <jsdaniel.h@hp.com>
+
+	Add of the first Changelog
+
+2013-07-04  José Daniel Hernández  <jsdaniel.h@hp.com>
+
+	Deleted the old gitlog2chamgelog.pl
+	Improve of gitlog2changelog.pl to avoid the use of multi paragraph. J
+
+	Improving parsing and display of changelog stuff!!
+
+	And this is it!
+
+2013-07-03  José Daniel Hernández  <jsdaniel.h@hp.com>
+
+	Corrected the name of the git2changelog script.
+	Fixed some minor issues.
+
+	Added the feature of parsing changelog with git logs!
